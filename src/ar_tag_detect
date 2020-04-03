@@ -1,0 +1,55 @@
+import cv2
+import time
+import numpy as np
+from google.colab.patches import cv2_imshow
+start_time = time.time()
+img = cv2.imread("/content/drive/My Drive/imgonline-com-ua-Piconpic-zaSXHv9dgFpjg.jpg")
+#print(img.shape)
+#cv2_imshow(img) 
+img =np.array(img)
+smallimg = np.zeros((713,1273))
+range = 20
+print(img.shape)
+i_val = 0
+count = 0
+j_val = 0
+i = 0
+j = 0
+while i<713:
+  while j<1273:
+    smallimg[i,j] = np.mean(img[i:i+7,j:j+7])
+    j = j+1
+  j = 0
+  i = i+1
+i = 0
+j = 0
+while i<713:
+  j = 0
+  while j<1273:
+    if (smallimg[i,j] < 5):
+      m = max(0,i-32)
+      while m < min(713,i+8):
+        n = max(0,j-32)
+        while n<min(713,j+8):
+          if (smallimg[m,n] > 240):
+            #print("i",i)
+            #print("j",j)
+            i_val = i_val+i
+            j_val = j_val +j
+            count = count + 1
+            m =2000
+            n = 2000
+          n = n+1
+        m = m+1
+    j = j+1
+  i = i+1
+if (count > 8):
+  i_val = i_val/count
+  j_val = j_val/count
+print("ifin",i_val)
+print("jfin",j_val)
+i_val = int(i_val)
+j_val = int(j_val)
+#cv2_imshow(image[i_val-64:i_val+64,j_val-64:j_val+64]) 
+end_time = time.time()-start_time
+print(end_time)

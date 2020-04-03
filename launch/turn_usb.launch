@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="Ball_Detection" name="Ball_Detection" type="turn_usb.py" output="screen" required="true" />
+</launch>
